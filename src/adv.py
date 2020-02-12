@@ -27,14 +27,14 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
-# room['outside'].n_to = room['foyer']
-# room['foyer'].s_to = room['outside']
-# room['foyer'].n_to = room['overlook']
-# room['foyer'].e_to = room['narrow']
-# room['overlook'].s_to = room['foyer']
-# room['narrow'].w_to = room['foyer']
-# room['narrow'].n_to = room['treasure']
-# room['treasure'].s_to = room['narrow']
+room['outside'].n_to = room['foyer']
+room['foyer'].s_to = room['outside']
+room['foyer'].n_to = room['overlook']
+room['foyer'].e_to = room['narrow']
+room['overlook'].s_to = room['foyer']
+room['narrow'].w_to = room['foyer']
+room['narrow'].n_to = room['treasure']
+room['treasure'].s_to = room['narrow']
 
 #
 # Main
@@ -48,23 +48,67 @@ player = Player(player_name, [])
 
 # print(f"\n{player.name} in the {player.current_room} room")
 
+
+# to keep track of how many ns and s there are
+
+room_choices = ["n", "s", "e", "w"]
+
+
+def eval_room_choices(player_choice):
+    n = 0
+    s = 0
+    e = 0
+    w = 0
+
+    while True:
+        print(f"n: {n}, s: {s}, e: {e}, w: {w}")
+        if player_choice == "n":
+            print("chose n")
+            n += 1
+        elif player_choice == "s":
+            print("chose s")
+            s += 1
+        elif player_choice == "e":
+            print("chose s"),
+            e += 1
+        elif player_choice == "w":
+            print("chose w"),
+            w += 1
+        elif player_choice == "q":
+            print("Goodbye!")
+            break
+        else:
+            print("not an input option")
+
+
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 
-room_choices = ["n", "s", "e", "w"]
-
 while True:
+    print("\n*************************************************")
     print(f"\n{player.name} is in the {player.current_room} room")
 
-    room = input("Where do you want to go? ")
+    [player_choice] = input(
+        "\nWhere do you want to go? ").strip().lower().split(' ')
+    print('this is the player choice', player_choice)
 
-    if room in room_choices:
-        print(room)
+    if player_choice in room_choices:
+        print("Player chose ", player_choice)
+        eval_room_choices(player_choice)
+    elif player_choice == "q":
+        print("Goodbye")
+        break
     else:
-        print("not in choices")
+        print("Not in available player choices")
+
+        # if room in room_choices:
+        #     # print(room)
+        #     eval_room_choices(player_choice)
+        # else:
+        #     print("not in choices")
 
 # PSUEDO CODE
 # 1) Take an input - game asks, Where do you want to go? And prints all possible options [N] --> Moves character north. [Q] -->Quit [where, whereami] --> gives character current location
