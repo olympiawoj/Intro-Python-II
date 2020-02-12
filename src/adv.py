@@ -26,7 +26,6 @@ earlier adventurers. The only exit is to the south."""),
 # print('room repr', repr(room['outside']))
 
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -63,6 +62,25 @@ w = 0
 # IF there's no room to the n/s/e/w of the room yu're currently in, don't allow you to move in this
 
 
+def build_initial_input():
+    # print('this is running')
+    input_msg = "Enter a direction to move your player:"
+    # player.current_room is outside
+    # room['outside'].n_to exists
+    if room[player.current_room].n_to is not None:
+        # print('room', room[player.current_room].n_to)
+        input_msg += " n,"
+    elif room[player.current_room].s_to is not None:
+        input_msg += "s,"
+    elif room[player.current_room].e_to is not None:
+        input_msg += "e,"
+    elif room[player.current_room].w_to is not None:
+        input_msg += "w,"
+    input_msg += " or q: "
+
+    return input_msg
+
+
 def eval_room_choices(player_input):
     global n
     global s
@@ -75,6 +93,7 @@ def eval_room_choices(player_input):
     if player_input == "n":
         print("chose n")
         new_room = room[player.current_room].n_to
+        # choose room
         print('new room', new_room)
         n += 1
     elif player_input == "s":
@@ -100,20 +119,21 @@ def eval_room_choices(player_input):
 # * Waits for user input and decides what to do.
 
 while True:
-    global feed
 
     print("\n*************************************************")
     print(f"\n{player.name} is in the {player.current_room} room")
-    # input returns an array of inputs, so we destructure to get the first
-    try:
-        [player_input] = input(
-            "\nEnter a direction to move your player: `n`, `s`, `e`, `w`, or ,q to quit. \n\n").strip().lower().split(' ')
-        # print('\nthis is the player choice', player_input)
 
-        if player_input in room_choices:
+    try:
+      # input returns an array of inputs, so we destructure to get the first
+
+        player_input = input(
+            "\n" + build_initial_input()).strip().lower().split(' ')
+        print('\nthis is the player choice', player_input[0])
+
+        if player_input[0] in room_choices:
             # print("Player input ", player_input)
-            eval_room_choices(player_input)
-        elif player_input == "q":
+            eval_room_choices(player_input[0])
+        elif player_input[0] == "q":
             print("Goodbye")
             break
         else:
@@ -121,7 +141,7 @@ while True:
 
     except:
         print("\nThat is not a valid input.")
-        continue
+        break
 
         # if room in room_choices:
         #     # print(room)
