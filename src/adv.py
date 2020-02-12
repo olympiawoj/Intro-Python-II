@@ -53,12 +53,18 @@ player = Player(player_name, [])
 
 room_choices = ["n", "s", "e", "w"]
 
+n = 0
+s = 0
+e = 0
+w = 0
+
 
 def eval_room_choices(player_choice):
-    n = 0
-    s = 0
-    e = 0
-    w = 0
+    global n
+    global s
+    global e
+    global w
+
     print(f"n: {n}, s: {s}, e: {e}, w: {w}")
     if player_choice == "n":
         print("chose n")
@@ -83,9 +89,11 @@ def eval_room_choices(player_choice):
 # * Waits for user input and decides what to do.
 
 while True:
+    global feed
+
     print("\n*************************************************")
     print(f"\n{player.name} is in the {player.current_room} room")
-
+    # input returns an array of inputs, so we destructure to get the first
     [player_choice] = input(
         "\nWhere do you want to go? ").strip().lower().split(' ')
     print('\nthis is the player choice', player_choice)
