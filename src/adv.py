@@ -42,6 +42,7 @@ earlier adventurers. The only exit is to the south."""),
 player_name = input("What is your name? ")
 player = Player(player_name, [])
 print(player)
+print('repr', repr(player))
 
 print(f"\n{player.name} in the {player.current_room} room")
 
