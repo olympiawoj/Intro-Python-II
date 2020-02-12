@@ -59,26 +59,21 @@ def eval_room_choices(player_choice):
     s = 0
     e = 0
     w = 0
-
-    while True:
-        print(f"n: {n}, s: {s}, e: {e}, w: {w}")
-        if player_choice == "n":
-            print("chose n")
-            n += 1
-        elif player_choice == "s":
-            print("chose s")
-            s += 1
-        elif player_choice == "e":
-            print("chose s"),
-            e += 1
-        elif player_choice == "w":
-            print("chose w"),
-            w += 1
-        elif player_choice == "q":
-            print("Goodbye!")
-            break
-        else:
-            print("not an input option")
+    print(f"n: {n}, s: {s}, e: {e}, w: {w}")
+    if player_choice == "n":
+        print("chose n")
+        n += 1
+    elif player_choice == "s":
+        print("chose s")
+        s += 1
+    elif player_choice == "e":
+        print("chose s"),
+        e += 1
+    elif player_choice == "w":
+        print("chose w"),
+        w += 1
+    else:
+        print("not an input option")
 
 
 # Write a loop that:
@@ -93,7 +88,7 @@ while True:
 
     [player_choice] = input(
         "\nWhere do you want to go? ").strip().lower().split(' ')
-    print('this is the player choice', player_choice)
+    print('\nthis is the player choice', player_choice)
 
     if player_choice in room_choices:
         print("Player chose ", player_choice)
@@ -102,7 +97,7 @@ while True:
         print("Goodbye")
         break
     else:
-        print("Not in available player choices")
+        print("I did not understand that command. Please pick n, s, e, w, or q")
 
         # if room in room_choices:
         #     # print(room)
