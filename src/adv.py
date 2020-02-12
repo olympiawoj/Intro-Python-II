@@ -22,8 +22,8 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-print('room string', room['outside'])
-print('room repr', repr(room['outside']))
+# print('room string', room['outside'])
+# print('room repr', repr(room['outside']))
 
 # Link rooms together
 
@@ -43,16 +43,33 @@ print('room repr', repr(room['outside']))
 # Make a new player object that is currently in the 'outside' room.
 player_name = input("What is your name? ")
 player = Player(player_name, [])
-print('player string', player)
-print('player repr', repr(player))
+# print('player string', player)
+# print('player repr', repr(player))
 
-print(f"\n{player.name} in the {player.current_room} room")
+# print(f"\n{player.name} in the {player.current_room} room")
 
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
+
+room_choices = ["n", "s", "e", "w"]
+
+while True:
+    print(f"\n{player.name} is in the {player.current_room} room")
+
+    room = input("Where do you want to go? ")
+
+    if room in room_choices:
+        print(room)
+    else:
+        print("not in choices")
+
+# PSUEDO CODE
+# 1) Take an input - game asks, Where do you want to go? And prints all possible options [N] --> Moves character north. [Q] -->Quit [where, whereami] --> gives character current location
+# 2) Create a conditional, check if input is "n", "w", "s", "e". If it's not either of these, print an error
+# if place is in the choices,
 
 
 # If the user enters a cardinal direction, attempt to move to the room there.
