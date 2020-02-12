@@ -22,6 +22,8 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+print('room string', room['outside'])
+print('room repr', repr(room['outside']))
 
 # Link rooms together
 
@@ -41,8 +43,8 @@ earlier adventurers. The only exit is to the south."""),
 # Make a new player object that is currently in the 'outside' room.
 player_name = input("What is your name? ")
 player = Player(player_name, [])
-print(player)
-print('repr', repr(player))
+print('player string', player)
+print('player repr', repr(player))
 
 print(f"\n{player.name} in the {player.current_room} room")
 
