@@ -58,25 +58,36 @@ s = 0
 e = 0
 w = 0
 
+# TO DO
+# Build a function that moves player based on new room
+# IF there's no room to the n/s/e/w of the room yu're currently in, don't allow you to move in this
 
-def eval_room_choices(player_choice):
+
+def eval_room_choices(player_input):
     global n
     global s
     global e
     global w
 
+    new_room = None
+
     print(f"n: {n}, s: {s}, e: {e}, w: {w}")
-    if player_choice == "n":
+    if player_input == "n":
         print("chose n")
+        new_room = room[player.current_room].n_to
+        print('new room', new_room)
         n += 1
-    elif player_choice == "s":
+    elif player_input == "s":
+        new_room = room[player.current_room].s_to
         print("chose s")
         s += 1
-    elif player_choice == "e":
+    elif player_input == "e":
+        new_room = room[player.current_room].e_to
         print("chose s"),
         e += 1
-    elif player_choice == "w":
-        print("chose w"),
+    elif player_input == "w":
+        new_room = room[player.current_room].w_to
+        print("chose w")
         w += 1
     else:
         print("not an input option")
@@ -94,18 +105,23 @@ while True:
     print("\n*************************************************")
     print(f"\n{player.name} is in the {player.current_room} room")
     # input returns an array of inputs, so we destructure to get the first
-    [player_choice] = input(
-        "\nWhere do you want to go? ").strip().lower().split(' ')
-    print('\nthis is the player choice', player_choice)
+    try:
+        [player_input] = input(
+            "\nEnter a direction to move your player: `n`, `s`, `e`, `w`, or ,q to quit. \n\n").strip().lower().split(' ')
+        # print('\nthis is the player choice', player_input)
 
-    if player_choice in room_choices:
-        print("Player chose ", player_choice)
-        eval_room_choices(player_choice)
-    elif player_choice == "q":
-        print("Goodbye")
-        break
-    else:
-        print("I did not understand that command. Please pick n, s, e, w, or q")
+        if player_input in room_choices:
+            # print("Player input ", player_input)
+            eval_room_choices(player_input)
+        elif player_input == "q":
+            print("Goodbye")
+            break
+        else:
+            print("I did not understand that command. Please pick n, s, e, w, or q")
+
+    except:
+        print("\nThat is not a valid input.")
+        continue
 
         # if room in room_choices:
         #     # print(room)
