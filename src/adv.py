@@ -131,17 +131,32 @@ while done is False:
     if player_input[0] == "get" or player_input[0] == "take":
         # if this weapon is not in the inventory, add it
         # otherwise print that it's already in the invenoty
-        if player_input[1] not in player.inventory:
+        # if player_input[1] not in player.inventory:
+        #     print('here its the inventory', player.inventory)
+        item_moved = False
+        for item in room[player.current_room].item_list:
             if item.name.lower() == player_input[1]:
                 player.add_item(item)
+                # also where we should remove item fro mroom
                 # prints what item was taken
-                if player_input[1] not in player.inventory:
-                    item.on_take()
-            else:
-                print(Fore.RED, f"\nNo item by name {player_input[1]}")
-        else:
+                item_moved = True
+                item.on_take()
+        if not item_moved:
+            print(Fore.RED, f"\nNo item by name {player_input[1]}")
+            continue
+        # else:
+        #     print(
+        #         Fore.RED, f"${player_input[1]} is already in player inventory!\n")
+    elif player_input[0] == "d" or player_input[0] == "drop":
+        print("Dropped")
+        item_moved = False
+        for item in player.inventory:
+            if item.name.lower() == player_input[1]:
+                player.drop_item(item)
+                item_moved = True
+        if not item_moved:
             print(
-                Fore.RED, f"${player_input[1]} is already in player inventory!\n")
+                Fore.RED, f"\nItem {player_input[1]} is not in your inventory")
 
     elif player_input[0] == "i" or player_input[0] == "inventory":
         player.print_inventory()

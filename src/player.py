@@ -21,11 +21,16 @@ class Player:
         """
         This method adds an item to the player's inventory
         """
-        if item not in self.inventory:
-            self.inventory.append(item)
+        self.inventory.append(item)
 
+    def drop_item(self, item):
+        """ 
+        This method removes an item from the player's inventory and drops it in the room
+        """
+        if item in self.inventory:
+            self.inventory.remove(item)
         else:
-            print(Fore.RED, "This item is already in your inventory")
+            print(Fore.RED, "Cannot drop an item that's not in your inventory")
 
     def print_inventory(self):
         if len(self.inventory) > 0:
@@ -33,7 +38,7 @@ class Player:
             print(Fore.MAGENTA, f"\nYour Inventory:")
             for item in self.inventory:
                 print(Fore.MAGENTA,
-                      f"   * {item.name}: {item.description}\n")
+                      f"   * {item.name}: {item.description}")
         else:
             print(Fore.RED, "\nYour inventory is empty")
 
