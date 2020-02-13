@@ -44,7 +44,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player_name = input(Fore.YELLOW + "What is your name? ")
+player_name = input(Fore.YELLOW + "\nWhat is your name? ")
 player = Player(player_name, [], [])
 # print('player string', player)
 # print('player repr', repr(player))
@@ -105,15 +105,15 @@ done = False
 while done is False:
 
     print(Fore.WHITE + "\n*************************************************")
-    print(Fore.WHITE +
+    print(Fore.MAGENTA +
           f"\n{player.name} is in the {room[player.current_room].name} room")
     print(Fore.WHITE +
-          f"\nDescription: {room[player.current_room].description}\n")
+          f"\n{room[player.current_room].description}\n")
 
     # printing the room list
     for item in room[player.current_room].item_list:
-        print("Item List:")
-        print(f"     - {item.name}: {item.description}")
+        print(Fore.WHITE, "Item List:")
+        print(Fore.WHITE, f"   * {item.name}: {item.description}")
 
     # try:
     # input returns an array of inputs, so we destructure to get the first
@@ -124,15 +124,21 @@ while done is False:
     # input_msg = puts(colored.yellow("\n" + build_initial_input()))
 
     player_input = input(
-        (Fore.YELLOW + "\n" + build_initial_input() + "\n")).strip().lower().split(' ')
+        (Fore.YELLOW + "\n" + build_initial_input() + "\n~~~> ")).strip().lower().split(' ')
 
-    print('this is the player input', player_input)
+    # print('this is the player input', player_input)
 
     if player_input[0] == "get" or player_input[0] == "take":
+        # if this weapon is not in the inventory, add it
+        # otherwise print that it's already in the invenoty
         if player_input[1] not in player.inventory:
-            player.add_item(player_input[1])
-            # prints what item was taken
-            item.on_take()
+            if item.name.lower() == player_input[1]:
+                player.add_item(item)
+                # prints what item was taken
+                if player_input[1] not in player.inventory:
+                    item.on_take()
+            else:
+                print(Fore.RED, f"\nNo item by name {player_input[1]}")
         else:
             print(
                 Fore.RED, f"${player_input[1]} is already in player inventory!\n")

@@ -23,16 +23,19 @@ class Player:
         """
         if item not in self.inventory:
             self.inventory.append(item)
+
         else:
             print(Fore.RED, "This item is already in your inventory")
 
     def print_inventory(self):
         if len(self.inventory) > 0:
-            print(Fore.MAGENTA, f"Your inventory:")
+            print("\n*************************************************")
+            print(Fore.MAGENTA, f"\nYour Inventory:")
             for item in self.inventory:
-                print(Fore.MAGENTA, item)
+                print(Fore.MAGENTA,
+                      f"   * {item.name}: {item.description}\n")
         else:
-            print(Fore.RED, "You inventory is empty")
+            print(Fore.RED, "\nYour inventory is empty")
 
     def __str__(self):
         """
