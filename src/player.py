@@ -26,6 +26,14 @@ class Player:
         else:
             print(Fore.RED, "This item is already in your inventory")
 
+    def print_inventory(self):
+        if len(self.inventory) > 0:
+            print(Fore.MAGENTA, f"Your inventory:")
+            for item in self.inventory:
+                print(Fore.MAGENTA, item)
+        else:
+            print(Fore.RED, "You inventory is empty")
+
     def __str__(self):
         """
         Replacement string method for the Player class
