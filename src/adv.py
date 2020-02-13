@@ -155,11 +155,11 @@ while done == False:
                 print("There is no room to the West of this room\n")
 
         elif player_input == "q":
-
             print("Goodbye")
             break
-        else:
-            print("I did not understand that command. Please pick n, s, e, w, or q")
+
+    else:
+        print("I did not understand that command. Please pick n, s, e, w, or q")
 
     # except:
     #     print("\nThat is not a valid input.")
