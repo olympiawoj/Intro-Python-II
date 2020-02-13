@@ -1,10 +1,14 @@
 from room import Room
 from player import Player
+from item import Item
 from colorama import init, Fore
 
 init()
 
 # Declare all the rooms
+
+item = Item("torchblower", "Will throw flames on your opponent")
+print(item)
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -67,17 +71,17 @@ w = 0
 
 
 def build_initial_input():
-    input_msg = "Enter a direction to move your player ~~~~~>"
+    input_msg = "Enter a direction to move your player ("
     # room['outside'].n_to exists
     if hasattr(room[player.current_room], 'n_to'):
         input_msg += " n"
     if hasattr(room[player.current_room], 's_to'):
-        input_msg += ", s"
+        input_msg += " s"
     if hasattr(room[player.current_room], 'e_to'):
-        input_msg += ", e"
+        input_msg += " e"
     if hasattr(room[player.current_room], 'w_to'):
-        input_msg += ", w"
-    input_msg += ". Enter q to quit game: "
+        input_msg += " w"
+    input_msg += " ) to move in that direction \nEnter q to quit game\n\n "
     return input_msg
 
 # Moves our player to new room, for this, we need to have a method on player
@@ -131,27 +135,27 @@ while done is False:
                 new_room = room[player.current_room].n_to
                 move_to_new_room(new_room)
             else:
-                print(Fore.RED + " \nThere is no room to the North of this room\n")
+                print(Fore.RED + "\nThere is no room to the North of this room")
         elif player_input == "s":
             if hasattr(room[player.current_room], 's_to'):
                 new_room = room[player.current_room].s_to
                 move_to_new_room(new_room)
             else:
-                print(Fore.RED + "\nThere is no room to the South of this room\n")
+                print(Fore.RED + "\nThere is no room to the South of this room")
 
         elif player_input == "e":
             if hasattr(room[player.current_room], 'e_to'):
                 new_room = room[player.current_room].e_to
                 move_to_new_room(new_room)
             else:
-                print(Fore.RED + "\nThere is no room to the East of this room\n")
+                print(Fore.RED + "\nThere is no room to the East of this room")
 
         elif player_input == "w":
             if hasattr(room[player.current_room], 'w_to'):
                 new_room = room[player.current_room].w_to
                 move_to_new_room(new_room)
             else:
-                print(Fore.RED + "\nThere is no room to the West of this room\n")
+                print(Fore.RED + "\nThere is no room to the West of this room")
 
         elif player_input == "q":
             print("\nGoodbye")
@@ -167,7 +171,7 @@ while done is False:
     #     break
 
 
-# PSUEDO CODE
+#  CODE
 # 1) Take an input - game asks, Where do you want to go? And prints all
 # possible options [N] --> Moves character north. [Q] -->Quit [where, whereami]
 # #--> gives character current location
