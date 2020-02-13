@@ -1,5 +1,8 @@
 from room import Room
 from player import Player
+from colorama import init, Fore
+
+init()
 
 # Declare all the rooms
 
@@ -40,7 +43,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player_name = input("What is your name? ")
+player_name = input(Fore.YELLOW + "What is your name? ")
 player = Player(player_name, [])
 # print('player string', player)
 # print('player repr', repr(player))
@@ -59,11 +62,12 @@ w = 0
 
 # TO DO
 # Build a function that moves player based on new room
-# IF there's no room to the n/s/e/w of the room yu're currently in, don't allow you to move in this
+# IF there's no room to the n/s/e/w of the room yu're currently in,
+# don't allow you to move in this
 
 
 def build_initial_input():
-    input_msg = "Enter a direction to move your player:"
+    input_msg = "Enter a direction to move your player ~~~~~>"
     # room['outside'].n_to exists
     if hasattr(room[player.current_room], 'n_to'):
         input_msg += " n"
@@ -99,21 +103,26 @@ def move_to_new_room(new_room):
 # * Waits for user input and decides what to do.
 
 done = False
-while done == False:
+while done is False:
 
-    print("\n*************************************************")
-    print(f"\n{player.name} is in the {room[player.current_room].name} room")
-    print(f"\nDescription: {room[player.current_room].description}")
+    print(Fore.WHITE + "\n*************************************************")
+    print(Fore.WHITE +
+          f"\n{player.name} is in the {room[player.current_room].name} room")
+    print(Fore.WHITE +
+          f"\nDescription: {room[player.current_room].description}")
 
     # try:
     # input returns an array of inputs, so we destructure to get the first
 
     # player_input = input(
-    #     "Enter a cardinal direction (n, s, w, e) to move in that direction. Enter q to quit the game: ")
-    player_input = input("\n" + build_initial_input()
-                         ).strip().lower().split(" ")
+    #     "Enter a cardinal direction (n, s, w, e) to move in that direction.
+    # Enter q to quit the game: ")
+    # input_msg = puts(colored.yellow("\n" + build_initial_input()))
 
-    player_input = player_input[0]
+    player_input = input(
+        (Fore.YELLOW + "\n" + build_initial_input())).strip().lower()
+
+    # player_input = player_input[0]
 
     if player_input in choices:
 
@@ -122,27 +131,27 @@ while done == False:
                 new_room = room[player.current_room].n_to
                 move_to_new_room(new_room)
             else:
-                print("\nThere is no room to the North of this room\n")
+                print(Fore.RED + " \nThere is no room to the North of this room\n")
         elif player_input == "s":
             if hasattr(room[player.current_room], 's_to'):
                 new_room = room[player.current_room].s_to
                 move_to_new_room(new_room)
             else:
-                print("\nThere is no room to the South of this room\n")
+                print(Fore.RED + "\nThere is no room to the South of this room\n")
 
         elif player_input == "e":
             if hasattr(room[player.current_room], 'e_to'):
                 new_room = room[player.current_room].e_to
                 move_to_new_room(new_room)
             else:
-                print("\nThere is no room to the East of this room\n")
+                print(Fore.RED + "\nThere is no room to the East of this room\n")
 
         elif player_input == "w":
             if hasattr(room[player.current_room], 'w_to'):
                 new_room = room[player.current_room].w_to
                 move_to_new_room(new_room)
             else:
-                print("\nThere is no room to the West of this room\n")
+                print(Fore.RED + "\nThere is no room to the West of this room\n")
 
         elif player_input == "q":
             print("\nGoodbye")
@@ -150,7 +159,7 @@ while done == False:
             break
 
     else:
-        print("\nI did not understand that command.\n" + build_initial_input())
+        print(Fore.RED + "\nI did not understand that command.")
         # print("\n*************************************************")
 
     # except:
@@ -159,8 +168,11 @@ while done == False:
 
 
 # PSUEDO CODE
-# 1) Take an input - game asks, Where do you want to go? And prints all possible options [N] --> Moves character north. [Q] -->Quit [where, whereami] --> gives character current location
-# 2) Create a conditional, check if input is "n", "w", "s", "e". If it's not either of these, print an error
+# 1) Take an input - game asks, Where do you want to go? And prints all
+# possible options [N] --> Moves character north. [Q] -->Quit [where, whereami]
+# #--> gives character current location
+# 2) Create a conditional, check if input is "n", "w", "s", "e". If it's not
+# either of these, print an error
 # if place is in the choices,
 
 
