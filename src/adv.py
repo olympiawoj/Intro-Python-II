@@ -50,7 +50,7 @@ player = Player(player_name, [])
 
 # to keep track of how many ns and s there are
 
-room_choices = ["n", "s", "e", "w"]
+choices = ["n", "s", "e", "w", "q"]
 
 n = 0
 s = 0
@@ -63,53 +63,34 @@ w = 0
 
 
 def build_initial_input():
-    # print('this is running')
+    print('this is running')
     input_msg = "Enter a direction to move your player:"
-    # player.current_room is outside
     # room['outside'].n_to exists
-    if room[player.current_room].n_to is not None:
-        # print('room', room[player.current_room].n_to)
+    if hasattr(room[player.current_room], 'n_to'):
         input_msg += " n,"
-    elif room[player.current_room].s_to is not None:
-        input_msg += "s,"
-    elif room[player.current_room].e_to is not None:
-        input_msg += "e,"
-    elif room[player.current_room].w_to is not None:
-        input_msg += "w,"
-    input_msg += " or q: "
-
+    if hasattr(room[player.current_room], 's_to'):
+        input_msg += " s,"
+    if hasattr(room[player.current_room], 'e_to'):
+        input_msg += " e,"
+    if hasattr(room[player.current_room], 'w_to'):
+        input_msg += " w,"
+    input_msg += " enter q to quit game: "
     return input_msg
 
+# Moves our player to new room, for this, we need to have a method on player
 
-def eval_room_choices(player_input):
-    global n
-    global s
-    global e
-    global w
 
-    new_room = None
-
-    print(f"n: {n}, s: {s}, e: {e}, w: {w}")
-    if player_input == "n":
-        print("chose n")
-        new_room = room[player.current_room].n_to
-        # choose room
-        print('new room', new_room)
-        n += 1
-    elif player_input == "s":
-        new_room = room[player.current_room].s_to
-        print("chose s")
-        s += 1
-    elif player_input == "e":
-        new_room = room[player.current_room].e_to
-        print("chose s"),
-        e += 1
-    elif player_input == "w":
-        new_room = room[player.current_room].w_to
-        print("chose w")
-        w += 1
-    else:
-        print("not an input option")
+def move_to_new_room(new_room):
+    if new_room.name == "Outside":
+        player.set_room("outside")
+    elif new_room.name == "Foyer":
+        player.set_room("foyer")
+    elif new_room.name == "Grand Overlook":
+        player.set_room("overlook")
+    elif new_room.name == "Narrow Passage":
+        player.set_room("narrow")
+    elif new_room.name == "Treasure Chamber":
+        player.set_room("treasure")
 
 
 # Write a loop that:
@@ -118,36 +99,72 @@ def eval_room_choices(player_input):
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 
-while True:
+done = False
+while done == False:
 
     print("\n*************************************************")
     print(f"\n{player.name} is in the {player.current_room} room")
 
-    try:
-      # input returns an array of inputs, so we destructure to get the first
+    # try:
+    # input returns an array of inputs, so we destructure to get the first
 
-        player_input = input(
-            "\n" + build_initial_input()).strip().lower().split(' ')
-        print('\nthis is the player choice', player_input[0])
+    # player_input = input(
+    #     "Enter a cardinal direction (n, s, w, e) to move in that direction. Enter q to quit the game: ")
+    player_input = input("\n" + build_initial_input()
+                         ).strip().lower().split(" ")
 
-        if player_input[0] in room_choices:
-            # print("Player input ", player_input)
-            eval_room_choices(player_input[0])
-        elif player_input[0] == "q":
+    print('\nthis is the player choice', player_input[0])
+
+    player_input = player_input[0]
+
+    if player_input in choices:
+        print("Player input ", player_input)
+
+        if player_input == "n":
+            if hasattr(room[player.current_room], 'n_to'):
+                new_room = room[player.current_room].n_to
+                move_to_new_room(new_room)
+                print('new room', new_room)
+            else:
+                print("There is no room to the North of this room\n")
+
+            # n += 1
+        elif player_input == "s":
+            if hasattr(room[player.current_room], 's_to'):
+                new_room = room[player.current_room].s_to
+                move_to_new_room(new_room)
+                print("chose s")
+                # s += 1
+            else:
+                print("There is no room to the South of this room\n")
+
+        elif player_input == "e":
+            if hasattr(room[player.current_room], 'e_to'):
+                print("chose e"),
+                new_room = room[player.current_room].e_to
+                move_to_new_room(new_room)
+            else:
+                print("There is no room to the East of this room\n")
+
+        elif player_input == "w":
+            if hasattr(room[player.current_room], 'w_to'):
+                print("chose w")
+                new_room = room[player.current_room].w_to
+                move_to_new_room(new_room)
+            else:
+                print("There is no room to the West of this room\n")
+
+        elif player_input == "q":
+
             print("Goodbye")
             break
         else:
             print("I did not understand that command. Please pick n, s, e, w, or q")
 
-    except:
-        print("\nThat is not a valid input.")
-        break
+    # except:
+    #     print("\nThat is not a valid input.")
+    #     break
 
-        # if room in room_choices:
-        #     # print(room)
-        #     eval_room_choices(player_choice)
-        # else:
-        #     print("not in choices")
 
 # PSUEDO CODE
 # 1) Take an input - game asks, Where do you want to go? And prints all possible options [N] --> Moves character north. [Q] -->Quit [where, whereami] --> gives character current location
