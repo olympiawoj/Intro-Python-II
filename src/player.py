@@ -1,5 +1,7 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
+from colorama import init, Fore
+init()
 
 
 class Player:
@@ -22,7 +24,7 @@ class Player:
         if item not in self.inventory:
             self.inventory.append(item)
         else:
-            print("This item is already in your inventory")
+            print(Fore.RED, "This item is already in your inventory")
 
     def __str__(self):
         """
