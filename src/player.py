@@ -20,7 +20,7 @@ class Player:
         This method adds an item to the player's inventory
         """
         if item not in self.inventory:
-            self.inventory.push(item)
+            self.inventory.append(item)
         else:
             print("This item is already in your inventory")
 
