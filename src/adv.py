@@ -63,25 +63,24 @@ w = 0
 
 
 def build_initial_input():
-    print('this is running')
     input_msg = "Enter a direction to move your player:"
     # room['outside'].n_to exists
     if hasattr(room[player.current_room], 'n_to'):
-        input_msg += " n,"
+        input_msg += " n"
     if hasattr(room[player.current_room], 's_to'):
-        input_msg += " s,"
+        input_msg += ", s"
     if hasattr(room[player.current_room], 'e_to'):
-        input_msg += " e,"
+        input_msg += ", e"
     if hasattr(room[player.current_room], 'w_to'):
-        input_msg += " w,"
-    input_msg += " enter q to quit game: "
+        input_msg += ", w"
+    input_msg += ". Enter q to quit game: "
     return input_msg
 
 # Moves our player to new room, for this, we need to have a method on player
 
 
 def move_to_new_room(new_room):
-    if new_room.name == "Outside":
+    if new_room.name == "Outside Cave Entrance":
         player.set_room("outside")
     elif new_room.name == "Foyer":
         player.set_room("foyer")
@@ -103,7 +102,8 @@ done = False
 while done == False:
 
     print("\n*************************************************")
-    print(f"\n{player.name} is in the {player.current_room} room")
+    print(f"\n{player.name} is in the {room[player.current_room].name} room")
+    print(f"\nDescription: {room[player.current_room].description}")
 
     # try:
     # input returns an array of inputs, so we destructure to get the first
@@ -113,53 +113,45 @@ while done == False:
     player_input = input("\n" + build_initial_input()
                          ).strip().lower().split(" ")
 
-    print('\nthis is the player choice', player_input[0])
-
     player_input = player_input[0]
 
     if player_input in choices:
-        print("Player input ", player_input)
 
         if player_input == "n":
             if hasattr(room[player.current_room], 'n_to'):
                 new_room = room[player.current_room].n_to
                 move_to_new_room(new_room)
-                print('new room', new_room)
             else:
-                print("There is no room to the North of this room\n")
-
-            # n += 1
+                print("\nThere is no room to the North of this room\n")
         elif player_input == "s":
             if hasattr(room[player.current_room], 's_to'):
                 new_room = room[player.current_room].s_to
                 move_to_new_room(new_room)
-                print("chose s")
-                # s += 1
             else:
-                print("There is no room to the South of this room\n")
+                print("\nThere is no room to the South of this room\n")
 
         elif player_input == "e":
             if hasattr(room[player.current_room], 'e_to'):
-                print("chose e"),
                 new_room = room[player.current_room].e_to
                 move_to_new_room(new_room)
             else:
-                print("There is no room to the East of this room\n")
+                print("\nThere is no room to the East of this room\n")
 
         elif player_input == "w":
             if hasattr(room[player.current_room], 'w_to'):
-                print("chose w")
                 new_room = room[player.current_room].w_to
                 move_to_new_room(new_room)
             else:
-                print("There is no room to the West of this room\n")
+                print("\nThere is no room to the West of this room\n")
 
         elif player_input == "q":
-            print("Goodbye")
+            print("\nGoodbye")
+            print("\n*************************************************")
             break
 
     else:
-        print("I did not understand that command. Please pick n, s, e, w, or q")
+        print("\nI did not understand that command.\n" + build_initial_input())
+        # print("\n*************************************************")
 
     # except:
     #     print("\nThat is not a valid input.")
