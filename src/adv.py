@@ -136,6 +136,8 @@ while done is False:
         else:
             print(
                 Fore.RED, f"${player_input[1]} is already in player inventory!\n")
+    elif player_input[0] == "i" or player_input[0] == "inventory":
+        player.print_inventory()
 
     elif player_input[0] in choices:
 
