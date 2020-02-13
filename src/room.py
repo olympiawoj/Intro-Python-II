@@ -17,6 +17,11 @@ class Room:
         for item in self.item_list:
             print(item)
 
+    # I want to add an item to user's inventory
+    def add_item(self, item):
+        self.item_list.append(item)
+        print(f"{item} added to Item List")
+
     def __str__(self):
         return f'Room: {self.name}, Description: {self.description}'
 

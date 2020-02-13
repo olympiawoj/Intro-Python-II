@@ -20,6 +20,9 @@ class Item:
         self.name = name
         self.description = description
 
+    def on_take(self):
+        print(f"You have picked up {self.name} item!")
+
     def __str__(self):
         """
         Replacement string for Item class
