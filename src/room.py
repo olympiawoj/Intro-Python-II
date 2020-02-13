@@ -8,6 +8,8 @@ class Room:
         self.description = description
         self.item_list = item_list
 
+    """TODO - player needs to be able to pick up items, dro pitems"""
+
     def print_items(self):
         """
         Prints all items in the room's item_list

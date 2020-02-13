@@ -7,26 +7,23 @@ init()
 
 # Declare all the rooms
 
-item = Item("torchblower", "Will throw flames on your opponent")
-print(item)
-
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", []),
+                     "North of you, the cave mount beckons", [Item("Flashlight", "It's dark in there, take this flashlight")]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", []),
+passages run north and east.""", [Item("Wand", "The Wand of Destiny is made of elder wood with a core of Thestral hair. It's allegience can only be won by killing its previous owner. ")]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", []),
+the distance, but there is no way across the chasm.""", [Item("Rope", "Don't fall, take this rope!")]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", []),
+to north. The smell of gold permeates the air.""", [Item("Invisibility Cloak", "This cloak has the power to shield the wearer from being seen from sight and protects against spells")]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", []),
+earlier adventurers. The only exit is to the south.""", [Item("Resurrection Stone", "Bring back your deceased loved ones with this magical stone")]),
 }
 
 # print('room string', room['outside'])
@@ -113,9 +110,12 @@ while done is False:
     print(Fore.WHITE +
           f"\n{player.name} is in the {room[player.current_room].name} room")
     print(Fore.WHITE +
-          f"\nDescription: {room[player.current_room].description}")
+          f"\nDescription: {room[player.current_room].description}\n")
 
-    print(room[player.current_room].item_list)
+    # printing the room list
+    for item in room[player.current_room].item_list:
+        print("Item List:")
+        print(f"     - {item.name}: {item.description}")
 
     # try:
     # input returns an array of inputs, so we destructure to get the first
