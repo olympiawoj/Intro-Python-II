@@ -1,3 +1,6 @@
+
+from colorama import init, Fore
+init()
 '''
 * Create a file called `item.py` and add an `Item` class in there.
 
@@ -21,7 +24,10 @@ class Item:
         self.description = description
 
     def on_take(self):
-        print(f"You have picked up {self.name} item!")
+        """
+        Used to perform logic when item is picked up by plaer
+        """
+        print(Fore.MAGENTA + f"\nYou have picked up {self.name} item!")
 
     def __str__(self):
         """

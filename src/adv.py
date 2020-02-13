@@ -45,7 +45,7 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 player_name = input(Fore.YELLOW + "What is your name? ")
-player = Player(player_name, [])
+player = Player(player_name, [], [])
 # print('player string', player)
 # print('player repr', repr(player))
 
@@ -62,9 +62,7 @@ e = 0
 w = 0
 
 # TO DO
-# Build a function that moves player based on new room
-# IF there's no room to the n/s/e/w of the room yu're currently in,
-# don't allow you to move in this
+# Check input if there are 2 inputs in sys.arg, then check if it's get or take,
 
 
 def build_initial_input():
@@ -126,43 +124,52 @@ while done is False:
     # input_msg = puts(colored.yellow("\n" + build_initial_input()))
 
     player_input = input(
-        (Fore.YELLOW + "\n" + build_initial_input())).strip().lower()
+        (Fore.YELLOW + "\n" + build_initial_input() + "\n")).strip().lower().split(' ')
 
-    # player_input = player_input[0]
+    print('this is the player input', player_input)
 
-    if player_input in choices:
+    if player_input[0] == "get" or player_input[0] == "take":
+        if player_input[1] not in player.inventory:
+            player.add_item(player_input[1])
+            # prints what item was taken
+            item.on_take()
+        else:
+            print(
+                Fore.RED, f"${player_input[1]} is already in player inventory!\n")
 
-        if player_input == "n":
+    elif player_input[0] in choices:
+
+        if player_input[0] == "n":
             if hasattr(room[player.current_room], 'n_to'):
                 new_room = room[player.current_room].n_to
                 move_to_new_room(new_room)
             else:
                 print(Fore.RED + "\nThere is no room to the North of this room")
-        elif player_input == "s":
+        elif player_input[0] == "s":
             if hasattr(room[player.current_room], 's_to'):
                 new_room = room[player.current_room].s_to
                 move_to_new_room(new_room)
             else:
                 print(Fore.RED + "\nThere is no room to the South of this room")
 
-        elif player_input == "e":
+        elif player_input[0] == "e":
             if hasattr(room[player.current_room], 'e_to'):
                 new_room = room[player.current_room].e_to
                 move_to_new_room(new_room)
             else:
                 print(Fore.RED + "\nThere is no room to the East of this room")
 
-        elif player_input == "w":
+        elif player_input[0] == "w":
             if hasattr(room[player.current_room], 'w_to'):
                 new_room = room[player.current_room].w_to
                 move_to_new_room(new_room)
             else:
                 print(Fore.RED + "\nThere is no room to the West of this room")
 
-        elif player_input == "q":
+        elif player_input[0] == "q":
             print("\nGoodbye")
             print("\n*************************************************")
-            break
+            done = True
 
     else:
         print(Fore.RED + "\nI did not understand that command.")
