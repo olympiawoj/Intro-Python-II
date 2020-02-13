@@ -141,6 +141,7 @@ while done is False:
         player.print_inventory()
 
     elif player_input[0] == "e" or player_input[0] == "Exit":
+        print(Fore.RED, "Goodbye")
         break
 
     elif player_input[0] in choices:
