@@ -1,6 +1,9 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
 
+from colorama import init, Fore
+init()
+
 
 class Room:
     def __init__(self, name, description, item_list):
@@ -17,10 +20,14 @@ class Room:
         for item in self.item_list:
             print(item)
 
-    # I want to add an item to user's inventory
-    def add_item(self, item):
-        self.item_list.append(item)
-        print(f"{item} added to Item List")
+    # I want to remove an item from a room
+    def remove_item(self, item):
+        # loop over item_list dict
+        print('removing working')
+        if item in self.item_list:
+            print('in here', item)
+            self.item_list.remove(item)
+            print(Fore.MAGENTA, f"{item} removed from Room")
 
     def __str__(self):
         return f'Room: {self.name}, Description: {self.description}'

@@ -111,9 +111,12 @@ while done is False:
           f"\n{room[player.current_room].description}\n")
 
     # printing the room list
-    for item in room[player.current_room].item_list:
-        print(Fore.WHITE, "Item List:")
-        print(Fore.WHITE, f"   * {item.name}: {item.description}")
+    print(Fore.WHITE, "Item List:")
+    if(len(room[player.current_room].item_list) > 0):
+        for item in room[player.current_room].item_list:
+            print(Fore.WHITE, f"   * {item.name}: {item.description}")
+    else:
+        print(Fore.RED, "   * No items in room.")
 
     # try:
     # input returns an array of inputs, so we destructure to get the first
@@ -137,10 +140,12 @@ while done is False:
         for item in room[player.current_room].item_list:
             if item.name.lower() == player_input[1]:
                 player.add_item(item)
+                room[player.current_room].remove_item(item)
                 # also where we should remove item fro mroom
                 # prints what item was taken
                 item_moved = True
                 item.on_take()
+
         if not item_moved:
             print(Fore.RED, f"\nNo item by name {player_input[1]}")
             continue
