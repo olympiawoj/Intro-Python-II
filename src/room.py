@@ -11,8 +11,6 @@ class Room:
         self.description = description
         self.item_list = item_list
 
-    """TODO - player needs to be able to pick up items, dro pitems"""
-
     def print_items(self):
         """
         Prints all items in the room's item_list
@@ -23,11 +21,13 @@ class Room:
     # I want to remove an item from a room
     def remove_item(self, item):
         # loop over item_list dict
-        print('removing working')
         if item in self.item_list:
-            print('in here', item)
             self.item_list.remove(item)
-            print(Fore.MAGENTA, f"{item} removed from Room")
+            print(Fore.MAGENTA, f"\n{item.name} was removed from the room")
+
+    def add_item(self, item):
+        self.item_list.append(item)
+        print(Fore.MAGENTA, f"\n{item.name} was added to the room")
 
     def __str__(self):
         return f'Room: {self.name}, Description: {self.description}'

@@ -19,7 +19,7 @@ into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm.""", [Item("Rope", "Don't fall, take this rope!")]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", [Item("Invisibility Cloak", "This cloak has the power to shield the wearer from being seen from sight and protects against spells")]),
+to north. The smell of gold permeates the air.""", [Item("Cloak", "This is an invisibilty has the power to shield the wearer from being seen from sight and protects against spells")]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
@@ -66,17 +66,18 @@ w = 0
 
 
 def build_initial_input():
-    input_msg = "Enter a direction to move your player ("
+    input_msg = "Enter a direction to move your player:"
     # room['outside'].n_to exists
     if hasattr(room[player.current_room], 'n_to'):
-        input_msg += " n"
+        input_msg += " n, "
     if hasattr(room[player.current_room], 's_to'):
-        input_msg += " s"
+        input_msg += " s, "
     if hasattr(room[player.current_room], 'e_to'):
-        input_msg += " e"
+        input_msg += " e, "
     if hasattr(room[player.current_room], 'w_to'):
-        input_msg += " w"
-    input_msg += " ) to move in that direction \nEnter q to quit game\n\n "
+        input_msg += " w, "
+    input_msg += "or i/inventory for inventory.\nEnter exit or q to quit game "
+    input_msg += "\nEnter take or get followed by item name to add item to inventory.\nEnter drop to remove item from inventory and add to room.\n\n "
     return input_msg
 
 # Moves our player to new room, for this, we need to have a method on player
@@ -102,9 +103,10 @@ def move_to_new_room(new_room):
 # * Waits for user input and decides what to do.
 
 done = False
-while done is False:
+print('this is done', done)
+while True:
 
-    print(Fore.WHITE + "\n*************************************************")
+    print(Fore.WHITE,  "\n*************************************************")
     print(Fore.MAGENTA +
           f"\n{player.name} is in the {room[player.current_room].name} room")
     print(Fore.WHITE +
@@ -112,7 +114,7 @@ while done is False:
 
     # printing the room list
     print(Fore.WHITE, "Item List:")
-    if(len(room[player.current_room].item_list) > 0):
+    if len(room[player.current_room].item_list) > 0:
         for item in room[player.current_room].item_list:
             print(Fore.WHITE, f"   * {item.name}: {item.description}")
     else:
@@ -140,24 +142,23 @@ while done is False:
         for item in room[player.current_room].item_list:
             if item.name.lower() == player_input[1]:
                 player.add_item(item)
+                item_moved = True
                 room[player.current_room].remove_item(item)
                 # also where we should remove item fro mroom
                 # prints what item was taken
-                item_moved = True
                 item.on_take()
 
         if not item_moved:
             print(Fore.RED, f"\nNo item by name {player_input[1]}")
-            continue
-        # else:
-        #     print(
-        #         Fore.RED, f"${player_input[1]} is already in player inventory!\n")
+
     elif player_input[0] == "d" or player_input[0] == "drop":
         print("Dropped")
         item_moved = False
         for item in player.inventory:
             if item.name.lower() == player_input[1]:
                 player.drop_item(item)
+                room[player.current_room].add_item(item)
+                item.on_drop()
                 item_moved = True
         if not item_moved:
             print(
@@ -166,7 +167,7 @@ while done is False:
     elif player_input[0] == "i" or player_input[0] == "inventory":
         player.print_inventory()
 
-    elif player_input[0] == "e" or player_input[0] == "Exit":
+    elif player_input[0] == "Exit":
         print(Fore.RED, "Goodbye")
         break
 
@@ -200,17 +201,14 @@ while done is False:
                 print(Fore.RED + "\nThere is no room to the West of this room")
 
         elif player_input[0] == "q":
-            print("\nGoodbye")
-            print("\n*************************************************")
-            done = True
+            print(Fore.BLUE, "\nGoodbye")
+            print(Fore.BLUE, "\n*************************************************")
+            break
 
     else:
         print(Fore.RED + "\nI did not understand that command.")
-        # print("\n*************************************************")
-
-    # except:
-    #     print("\nThat is not a valid input.")
-    #     break
+        done = True
+        break
 
 
 #  CODE

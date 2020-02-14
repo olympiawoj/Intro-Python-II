@@ -27,13 +27,15 @@ class Item:
         """
         Used to perform logic when item is picked up by player
         """
-        print(Fore.MAGENTA + f"\nYou have picked up {self.name} item!")
+        print(Fore.MAGENTA + f"\nYou have picked up the item: {self.name}!")
+        print()
 
     def on_drop(self):
         """
         Used to perform logic when item is dropped by player
         """
-        print(Fore.MAGENTA, f"You have dropped {self.name} item!")
+        print(Fore.MAGENTA, f"\nYou have dropped {self.name} item!")
+        print()
 
     def __str__(self):
         """

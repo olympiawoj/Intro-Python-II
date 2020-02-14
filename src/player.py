@@ -24,7 +24,7 @@ class Player:
         self.inventory.append(item)
 
     def drop_item(self, item):
-        """ 
+        """
         This method removes an item from the player's inventory and drops it in the room
         """
         if item in self.inventory:
@@ -34,7 +34,7 @@ class Player:
 
     def print_inventory(self):
         if len(self.inventory) > 0:
-            print("\n*************************************************")
+            print(Fore.WHITE,  "\n*************************************************")
             print(Fore.MAGENTA, f"\nYour Inventory:")
             for item in self.inventory:
                 print(Fore.MAGENTA,
